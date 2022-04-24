@@ -6,6 +6,7 @@ import {
   GET_CURRENCIES, ADD_EXPENSE, EDIT_EXPENSE, DISABLE_EDITING,
 } from '../actions';
 import { getCurrencies, convertValue } from '../services';
+import style from './Form.module.css';
 
 function Form() {
   const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -16,7 +17,7 @@ function Form() {
   const [method, setMethod] = useState('Dinheiro');
   const [tag, setTag] = useState('Alimentação');
   const [description, setDescription] = useState('');
-  const [totalExpense, setTotalExpense] = useState(0);
+  // const [totalExpense, setTotalExpense] = useState(0);
   const [id, setId] = useState(1);
   const dispatch = useDispatch();
   const { currencies, expenses } = useSelector((state) => state.wallet);
@@ -40,12 +41,12 @@ function Form() {
     }
   }, [editing]);
 
-  useEffect(() => {
-    setTotalExpense(expenses.reduce((acc, curr) => {
-      acc += curr.convertedValue;
-      return Number(acc.toFixed(2));
-    }, 0));
-  }, [expenses, editing]);
+  // useEffect(() => {
+  //   setTotalExpense(expenses.reduce((acc, curr) => {
+  //     acc += curr.convertedValue;
+  //     return Number(acc.toFixed(2));
+  //   }, 0));
+  // }, [expenses, editing]);
 
   const editExpense = (obj) => {
     const editedExpenses = expenses;
@@ -88,9 +89,9 @@ function Form() {
 
   return (
     <section className="header">
-      <header>
+      {/* <header>
         <span>{totalExpense}</span>
-      </header>
+      </header> */}
       <form>
         <label htmlFor="value">
           Value:
