@@ -5,7 +5,7 @@ import { RiDeleteBin2Fill, RiFileEditFill } from 'react-icons/ri';
 import { GiConfirmed } from 'react-icons/gi';
 import { handleDelete, getExpenseObject } from '../helpers';
 import Header from '../components/Header';
-import { DELETE_EXPENSE, EDIT_EXPENSE } from '../actions';
+import { DELETE_EXPENSE, GET_EXPENSE_TO_EDIT } from '../actions';
 
 function Carteira() {
   const tableHead = ['Descrição', 'Tag', 'Método de Pagamento',
@@ -54,7 +54,7 @@ function Carteira() {
                 <button
                   type="button"
                   onClick={() => dispatch({
-                    type: EDIT_EXPENSE,
+                    type: GET_EXPENSE_TO_EDIT,
                     payload: getExpenseObject(id, expenses),
                   })}
                 >

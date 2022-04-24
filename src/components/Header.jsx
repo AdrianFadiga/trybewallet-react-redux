@@ -1,7 +1,9 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { GET_CURRENCIES, ADD_EXPENSE } from '../actions';
+import {
+  GET_CURRENCIES, ADD_EXPENSE, EDIT_EXPENSE, GET_EXPENSE_TO_EDIT,
+} from '../actions';
 import { getCurrencies, convertValue } from '../services';
 
 function Header() {
@@ -16,8 +18,7 @@ function Header() {
   const [id, setId] = useState(1);
   const dispatch = useDispatch();
   const { currencies, expenses } = useSelector((state) => state.wallet);
-  // const { expenses } = useSelector((state) => state.wallet);
-  const { editing, expenseObj: { expense } } = useSelector((state) => state.editing);
+  const { editing, expenseToEdit: { expense, index } } = useSelector((state) => state.editing);
 
   useEffect(async () => {
     const getCurrenciesEffect = async () => {
@@ -42,30 +43,46 @@ function Header() {
       acc += curr.convertedValue;
       return Number(acc.toFixed(2));
     }, 0));
-  }, [expenses]);
+  }, [expenses, editing]);
+
+  const editExpense = (obj) => {
+    const editedExpenses = expenses;
+    editedExpenses[index] = obj;
+    dispatch({
+      type: EDIT_EXPENSE,
+      payload: editedExpenses,
+    });
+    dispatch({
+      type: GET_EXPENSE_TO_EDIT,
+      payload: [],
+    });
+  };
 
   const addExpense = async () => {
     const { convertedValue, convertionRatio } = await convertValue(value, currency);
-    dispatch({
-      type: ADD_EXPENSE,
-      payload: {
-        id,
-        description,
-        tag,
-        method,
-        value,
-        convertionRatio,
-        convertedValue: Number(convertedValue.toFixed(2)),
-        currency,
-        real: 'real',
-      },
-    });
-    setValue(0);
-    setId(id + 1);
-  };
-
-  const editExpense = () => {
-
+    const obj = {
+      id,
+      description,
+      tag,
+      method,
+      value,
+      convertionRatio,
+      convertedValue: Number(convertedValue.toFixed(2)),
+      currency,
+      real: 'real',
+    };
+    if (!editing) {
+      dispatch({
+        type: ADD_EXPENSE,
+        payload: {
+          ...obj,
+        },
+      });
+      setValue(0);
+      setId(id + 1);
+      return 'so p pausar a função msm';
+    }
+    return editExpense(obj);
   };
 
   return (
@@ -134,22 +151,12 @@ function Header() {
             onChange={({ target }) => setDescription(target.value)}
           />
         </label>
-        {!editing ? (
-          <button
-            type="button"
-            onClick={addExpense}
-          >
-            Adicionar despesa
-          </button>
-        )
-          : (
-            <button
-              type="button"
-              onClick={editExpense}
-            >
-              Editar despesa
-            </button>
-          )}
+        <button
+          type="button"
+          onClick={addExpense}
+        >
+          {!editing ? 'Adicionar despesa' : 'Editar despesa'}
+        </button>
       </form>
     </section>
   );

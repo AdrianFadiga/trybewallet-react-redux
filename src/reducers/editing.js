@@ -1,16 +1,16 @@
-import { EDIT_EXPENSE } from '../actions';
+import { GET_EXPENSE_TO_EDIT } from '../actions';
 
 const INITIAL_STATE = {
   editing: false,
-  expenseObj: [],
+  expenseToEdit: [],
 };
 
 const editing = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case EDIT_EXPENSE:
+    case GET_EXPENSE_TO_EDIT:
       return {
         editing: !state.editing,
-        expenseObj: action.payload,
+        expenseToEdit: action.payload,
       };
     default:
       return state;
