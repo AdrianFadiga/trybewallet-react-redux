@@ -1,4 +1,4 @@
-import { GET_EXPENSE_TO_EDIT } from '../actions';
+import { GET_EXPENSE_TO_EDIT, DISABLE_EDITING } from '../actions';
 
 const INITIAL_STATE = {
   editing: false,
@@ -11,6 +11,11 @@ const editing = (state = INITIAL_STATE, action) => {
       return {
         editing: !state.editing,
         expenseToEdit: action.payload,
+      };
+    case DISABLE_EDITING:
+      return {
+        ...state,
+        editing: false,
       };
     default:
       return state;

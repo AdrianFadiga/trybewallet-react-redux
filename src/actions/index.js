@@ -4,11 +4,14 @@ export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const GET_EXPENSE_TO_EDIT = 'GET_EXPENSE_TO_EDIT';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const DISABLE_EDITING = 'DISABLE_EDITING';
 
 export const userLogin = (payload) => ({
   type: USER_LOGIN,
   payload,
 });
+
+export const disableEditing = () => ({ type: DISABLE_EDITING });
 
 export const addExpense = (payload) => ({
   type: USER_LOGIN,

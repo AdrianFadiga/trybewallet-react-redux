@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  GET_CURRENCIES, ADD_EXPENSE, EDIT_EXPENSE, GET_EXPENSE_TO_EDIT,
+  GET_CURRENCIES, ADD_EXPENSE, EDIT_EXPENSE, DISABLE_EDITING,
 } from '../actions';
 import { getCurrencies, convertValue } from '../services';
 
@@ -53,8 +53,7 @@ function Header() {
       payload: editedExpenses,
     });
     dispatch({
-      type: GET_EXPENSE_TO_EDIT,
-      payload: [],
+      type: DISABLE_EDITING,
     });
   };
 
