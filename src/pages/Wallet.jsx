@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import { RiDeleteBin2Fill, RiFileEditFill } from 'react-icons/ri';
 import { GiConfirmed } from 'react-icons/gi';
 import { handleDelete, getExpenseObject } from '../helpers';
-import Header from '../components/Header';
+import Form from '../components/Form';
 import { DELETE_EXPENSE, GET_EXPENSE_TO_EDIT } from '../actions';
 
 function Carteira() {
@@ -17,7 +17,7 @@ function Carteira() {
 
   return (
     <section className="walletPage">
-      <Header />
+      <Form />
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -28,7 +28,15 @@ function Carteira() {
         </thead>
         <tbody>
           {expenses.map(({
-            description, tag, method, value, currency, convertionRatio, convertedValue, real, id,
+            description,
+            tag,
+            method,
+            value,
+            currency,
+            convertionRatio,
+            convertedValue,
+            convertTo,
+            id,
           }) => (
             <tr key={id}>
               <td>{description}</td>
@@ -38,7 +46,7 @@ function Carteira() {
               <td>{currency}</td>
               <td>{convertionRatio}</td>
               <td>{convertedValue}</td>
-              <td>{real}</td>
+              <td>{convertTo}</td>
               <td>
                 {!editing && (
                 <button

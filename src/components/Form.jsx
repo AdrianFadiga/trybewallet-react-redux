@@ -1,16 +1,18 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   GET_CURRENCIES, ADD_EXPENSE, EDIT_EXPENSE, DISABLE_EDITING,
 } from '../actions';
 import { getCurrencies, convertValue } from '../services';
 
-function Header() {
+function Form() {
   const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
   const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
   const [value, setValue] = useState(0);
   const [currency, setCurrency] = useState('USD');
+  const [convertTo, setConvertTo] = useState('BRL');
   const [method, setMethod] = useState('Dinheiro');
   const [tag, setTag] = useState('Alimentação');
   const [description, setDescription] = useState('');
@@ -58,17 +60,17 @@ function Header() {
   };
 
   const addExpense = async () => {
-    const { convertedValue, convertionRatio } = await convertValue(value, currency);
+    const { convertedValue, convertionRatio } = await convertValue(value, currency, convertTo);
     const obj = {
       id,
       description,
       tag,
       method,
       value,
-      convertionRatio,
+      convertionRatio: Number(convertionRatio.toFixed(4)),
       convertedValue: Number(convertedValue.toFixed(2)),
       currency,
-      real: 'real',
+      convertTo,
     };
     if (!editing) {
       dispatch({
@@ -107,10 +109,25 @@ function Header() {
             value={currency}
             onChange={({ target }) => setCurrency(target.value)}
           >
+            <option>BRL</option>
             {currencies.map((c) => (
               <option key={c}>{c}</option>
             ))}
           </select>
+          <label htmlFor="convertTo">
+            Converter para:
+            <select
+              id="convertTo"
+              name="convertTo"
+              value={convertTo}
+              onChange={({ target }) => setConvertTo(target.value)}
+            >
+              <option>BRL</option>
+              {currencies.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+          </label>
         </label>
         <label htmlFor="method">
           Método de pagamento:
@@ -150,15 +167,17 @@ function Header() {
             onChange={({ target }) => setDescription(target.value)}
           />
         </label>
-        <button
+        <Button
+          variant="primary"
+          size="sm"
           type="button"
           onClick={addExpense}
         >
           {!editing ? 'Adicionar despesa' : 'Editar despesa'}
-        </button>
+        </Button>
       </form>
     </section>
   );
 }
 
-export default Header;
+export default Form;
