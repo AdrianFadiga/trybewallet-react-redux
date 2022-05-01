@@ -4,8 +4,9 @@ import { Table } from 'react-bootstrap';
 import { RiDeleteBin2Fill, RiFileEditFill } from 'react-icons/ri';
 import { GiConfirmed } from 'react-icons/gi';
 import { handleDelete, getExpenseObject } from '../helpers';
-import Form from '../components/Form';
+import ExpenseForm from '../components/ExpenseForm';
 import { DELETE_EXPENSE, GET_EXPENSE_TO_EDIT } from '../actions';
+import style from './Wallet.module.css';
 
 function Carteira() {
   const tableHead = ['Descrição', 'Tag', 'Método de Pagamento',
@@ -16,9 +17,14 @@ function Carteira() {
   const { editing } = useSelector((state) => state.editing);
 
   return (
-    <section className="walletPage">
-      <Form />
-      <Table striped bordered hover variant="dark">
+    <section className={style.walletPage}>
+      <ExpenseForm />
+      <Table
+        striped
+        bordered
+        hover
+        variant="dark"
+      >
         <thead>
           <tr>
             {tableHead.map((t) => (

@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   GET_CURRENCIES, ADD_EXPENSE, EDIT_EXPENSE, DISABLE_EDITING,
 } from '../actions';
 import { getCurrencies, convertValue } from '../services';
-import style from './Form.module.css';
+import style from './ExpenseForm.module.css';
 
-function Form() {
+function ExpenseForm() {
   const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
   const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
   const [value, setValue] = useState(0);
@@ -35,6 +35,7 @@ function Form() {
     if (expense) {
       setValue(expense.value);
       setCurrency(expense.currency);
+      setConvertTo(expense.convertTo);
       setMethod(expense.method);
       setTag(expense.tag);
       setDescription(expense.description);
@@ -181,4 +182,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default ExpenseForm;
