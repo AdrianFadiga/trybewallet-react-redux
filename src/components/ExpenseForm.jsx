@@ -42,13 +42,6 @@ function ExpenseForm() {
     }
   }, [editing]);
 
-  // useEffect(() => {
-  //   setTotalExpense(expenses.reduce((acc, curr) => {
-  //     acc += curr.convertedValue;
-  //     return Number(acc.toFixed(2));
-  //   }, 0));
-  // }, [expenses, editing]);
-
   const editExpense = (obj) => {
     const editedExpenses = expenses;
     editedExpenses[index] = obj;
@@ -89,23 +82,23 @@ function ExpenseForm() {
   };
 
   return (
-    <section className="header">
-      {/* <header>
-        <span>{totalExpense}</span>
-      </header> */}
-      <form>
-        <label htmlFor="value">
+    <section className={style.expenseFormPage}>
+      <div className={style.formHeader}>
+        <h1>Cabeçalho</h1>
+      </div>
+      <Form>
+        <Form.Label htmlFor="value">
           Value:
-          <input
+          <Form.Control
             type="number"
             name="value"
             value={value}
             onChange={({ target }) => setValue(target.value)}
           />
-        </label>
-        <label htmlFor="currency">
+        </Form.Label>
+        <Form.Label htmlFor="currency">
           Moeda:
-          <select
+          <Form.Select
             id="currency"
             name="currency"
             value={currency}
@@ -115,10 +108,10 @@ function ExpenseForm() {
             {currencies.map((c) => (
               <option key={c}>{c}</option>
             ))}
-          </select>
-          <label htmlFor="convertTo">
+          </Form.Select>
+          <Form.Label htmlFor="convertTo">
             Converter para:
-            <select
+            <Form.Select
               id="convertTo"
               name="convertTo"
               value={convertTo}
@@ -128,12 +121,12 @@ function ExpenseForm() {
               {currencies.map((c) => (
                 <option key={c}>{c}</option>
               ))}
-            </select>
-          </label>
-        </label>
-        <label htmlFor="method">
+            </Form.Select>
+          </Form.Label>
+        </Form.Label>
+        <Form.Label htmlFor="method">
           Método de pagamento:
-          <select
+          <Form.Select
             name="method"
             value={method}
             onChange={({ target }) => { setMethod(target.value); }}
@@ -146,11 +139,11 @@ function ExpenseForm() {
                 {m}
               </option>
             ))}
-          </select>
-        </label>
-        <label htmlFor="tag">
+          </Form.Select>
+        </Form.Label>
+        <Form.Label htmlFor="tag">
           Tag:
-          <select
+          <Form.Select
             name="tag"
             value={tag}
             onChange={({ target }) => setTag(target.value)}
@@ -158,17 +151,17 @@ function ExpenseForm() {
             {tags.map((t) => (
               <option key={t}>{t}</option>
             ))}
-          </select>
-        </label>
-        <label htmlFor="description">
+          </Form.Select>
+        </Form.Label>
+        <Form.Label htmlFor="description">
           Descrição:
-          <input
+          <Form.Control
             name="description"
             type="text"
             value={description}
             onChange={({ target }) => setDescription(target.value)}
           />
-        </label>
+        </Form.Label>
         <Button
           variant="primary"
           size="sm"
@@ -177,7 +170,7 @@ function ExpenseForm() {
         >
           {!editing ? 'Adicionar despesa' : 'Editar despesa'}
         </Button>
-      </form>
+      </Form>
     </section>
   );
 }

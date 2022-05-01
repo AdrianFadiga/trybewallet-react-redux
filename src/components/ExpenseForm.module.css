@@ -1,0 +1,9 @@
+.expenseFormPage {
+  display: flex;
+  flex-direction: column;
+  width: 40%
+}
+
+.formHeader {
+  background-color: red;
+}
