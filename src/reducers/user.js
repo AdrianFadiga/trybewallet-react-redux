@@ -1,7 +1,7 @@
 import { USER_LOGIN } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
+  email: 'adrian@adrian.com',
 };
 
 const wallet = (state = INITIAL_STATE, action) => {

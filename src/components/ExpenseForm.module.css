@@ -1,9 +1,40 @@
 .expenseFormPage {
   display: flex;
   flex-direction: column;
-  width: 40%
+  width: 40%;
+  height: 100%;
+  border-right: 1px solid inherit;
+  background-color: rgba(137, 43, 226, 0.454);
 }
 
 .formHeader {
-  background-color: red;
+  background-color: #212529;
+}
+
+.logoImg {
+  height: 42px;
+}
+
+.expenseForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.valueCurrencyAndConvertTo {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+.valueLabel {
+  width: 20%
+}
+
+.methodAndTagContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
 }

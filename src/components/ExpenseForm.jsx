@@ -7,6 +7,7 @@ import {
 } from '../actions';
 import { getCurrencies, convertValue } from '../services';
 import style from './ExpenseForm.module.css';
+import walletLogo from '../images/logoWallet.png';
 
 function ExpenseForm() {
   const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -17,11 +18,11 @@ function ExpenseForm() {
   const [method, setMethod] = useState('Dinheiro');
   const [tag, setTag] = useState('Alimentação');
   const [description, setDescription] = useState('');
-  // const [totalExpense, setTotalExpense] = useState(0);
   const [id, setId] = useState(1);
   const dispatch = useDispatch();
   const { currencies, expenses } = useSelector((state) => state.wallet);
   const { editing, expenseToEdit: { expense, index } } = useSelector((state) => state.editing);
+  const { email } = useSelector((state) => state.user);
 
   useEffect(async () => {
     const getCurrenciesEffect = async () => {
@@ -84,31 +85,43 @@ function ExpenseForm() {
   return (
     <section className={style.expenseFormPage}>
       <div className={style.formHeader}>
-        <h1>Cabeçalho</h1>
+        <img
+          className={style.logoImg}
+          src={walletLogo}
+          alt=""
+        />
       </div>
-      <Form>
-        <Form.Label htmlFor="value">
-          Value:
-          <Form.Control
-            type="number"
-            name="value"
-            value={value}
-            onChange={({ target }) => setValue(target.value)}
-          />
-        </Form.Label>
-        <Form.Label htmlFor="currency">
-          Moeda:
-          <Form.Select
-            id="currency"
-            name="currency"
-            value={currency}
-            onChange={({ target }) => setCurrency(target.value)}
+      <div className={style.userMail}>
+        <span>{email}</span>
+      </div>
+      <Form className={style.expenseForm}>
+        <div className={style.valueCurrencyAndConvertTo}>
+          <Form.Label
+            className={style.valueLabel}
+            htmlFor="value"
           >
-            <option>BRL</option>
-            {currencies.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </Form.Select>
+            Valor:
+            <Form.Control
+              type="number"
+              name="value"
+              value={value}
+              onChange={({ target }) => setValue(target.value)}
+            />
+          </Form.Label>
+          <Form.Label htmlFor="currency">
+            Moeda:
+            <Form.Select
+              id="currency"
+              name="currency"
+              value={currency}
+              onChange={({ target }) => setCurrency(target.value)}
+            >
+              <option>BRL</option>
+              {currencies.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </Form.Select>
+          </Form.Label>
           <Form.Label htmlFor="convertTo">
             Converter para:
             <Form.Select
@@ -123,36 +136,38 @@ function ExpenseForm() {
               ))}
             </Form.Select>
           </Form.Label>
-        </Form.Label>
-        <Form.Label htmlFor="method">
-          Método de pagamento:
-          <Form.Select
-            name="method"
-            value={method}
-            onChange={({ target }) => { setMethod(target.value); }}
-          >
-            {methods.map((m) => (
-              <option
-                key={m}
-                value={m}
-              >
-                {m}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Label>
-        <Form.Label htmlFor="tag">
-          Tag:
-          <Form.Select
-            name="tag"
-            value={tag}
-            onChange={({ target }) => setTag(target.value)}
-          >
-            {tags.map((t) => (
-              <option key={t}>{t}</option>
-            ))}
-          </Form.Select>
-        </Form.Label>
+        </div>
+        <div className={style.methodAndTagContainer}>
+          <Form.Label htmlFor="method">
+            Método de pagamento:
+            <Form.Select
+              name="method"
+              value={method}
+              onChange={({ target }) => { setMethod(target.value); }}
+            >
+              {methods.map((m) => (
+                <option
+                  key={m}
+                  value={m}
+                >
+                  {m}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Label>
+          <Form.Label htmlFor="tag">
+            Tag:
+            <Form.Select
+              name="tag"
+              value={tag}
+              onChange={({ target }) => setTag(target.value)}
+            >
+              {tags.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
+            </Form.Select>
+          </Form.Label>
+        </div>
         <Form.Label htmlFor="description">
           Descrição:
           <Form.Control
