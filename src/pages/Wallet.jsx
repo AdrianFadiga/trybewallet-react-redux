@@ -8,7 +8,7 @@ import Expense from '../components/Expense';
 function Carteira() {
   const tableHead = ['Descrição', 'Tag', 'Método de Pagamento',
     'Valor', 'Moeda', 'Câmbio Utilizado', 'Valor Convertido',
-    'Moeda de conversão', 'Editar/Excluir'];
+    'Moeda de conversão', 'Excluir/Editar'];
   const { expenses } = useSelector((state) => state.wallet);
 
   return (
@@ -19,6 +19,9 @@ function Carteira() {
         bordered
         hover
         variant="dark"
+        style={{
+          height: 'min-content',
+        }}
       >
         <thead>
           <tr>

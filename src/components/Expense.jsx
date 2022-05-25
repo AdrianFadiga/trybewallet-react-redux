@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RiDeleteBin2Fill, RiFileEditFill } from 'react-icons/ri';
+import { RiFileEditFill } from 'react-icons/ri';
+import { AiFillDelete } from 'react-icons/ai';
 import { GiConfirmed } from 'react-icons/gi';
-import { DELETE_EXPENSE, GET_EXPENSE_TO_EDIT } from '../actions';
+import { DELETE_EXPENSE, GET_EXPENSE_TO_EDIT, DISABLE_EDITING } from '../actions';
 import { handleDelete, getExpenseIndex } from '../helpers';
+import style from './Expense.module.css';
 
 function Expense({
   expense: {
@@ -19,12 +21,20 @@ function Expense({
   },
 }) {
   const { expenses } = useSelector((state) => state.wallet);
-  const { editing } = useSelector((state) => state.editing);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const { editing, index } = useSelector((state) => state.editing);
   const dispatch = useDispatch();
+
   return (
-    <tr key={id}>
-      <td>{description}</td>
+    <tr
+      key={id}
+      className={style.tableRow}
+    >
+      <td
+        className={style.xablau}
+      >
+        {description}
+
+      </td>
       <td>{tag}</td>
       <td>{method}</td>
       <td>{value}</td>
@@ -41,18 +51,31 @@ function Expense({
             payload: handleDelete(id, expenses),
           })}
         >
-          <RiDeleteBin2Fill />
+          <AiFillDelete />
         </button>
+        {!editing && (
+          <button
+            type="button"
+            disabled={editing}
+            onClick={() => dispatch({
+              type: GET_EXPENSE_TO_EDIT,
+              payload: getExpenseIndex(id, expenses),
+            })}
+          >
+            <RiFileEditFill />
+          </button>
+        )}
+        {editing && (
         <button
           type="button"
-          disabled={isDisabled}
+          disabled={expenses[index].id !== id}
           onClick={() => dispatch({
-            type: GET_EXPENSE_TO_EDIT,
-            payload: getExpenseIndex(id, expenses),
+            type: DISABLE_EDITING,
           })}
         >
-          {!editing ? <RiFileEditFill /> : <GiConfirmed />}
+          {expenses[index].id !== id ? <RiFileEditFill /> : <GiConfirmed />}
         </button>
+        )}
       </td>
     </tr>
   );

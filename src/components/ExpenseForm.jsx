@@ -78,6 +78,7 @@ function ExpenseForm() {
   };
 
   return (
+    // Adicionar dark mode e botão de logout;
     <section className={style.expenseFormPage}>
       <div className={style.formHeader}>
         <img
@@ -85,9 +86,9 @@ function ExpenseForm() {
           src={walletLogo}
           alt=""
         />
-      </div>
-      <div className={style.userMail}>
-        <span>{email}</span>
+        <div className={style.userMail}>
+          <span>{email}</span>
+        </div>
       </div>
       <Form className={style.expenseForm}>
         <div className={style.valueCurrencyAndConvertTo}>
@@ -95,7 +96,7 @@ function ExpenseForm() {
             className={style.valueLabel}
             htmlFor="value"
           >
-            Valor:
+            Valor
             <Form.Control
               type="number"
               name="value"
@@ -104,7 +105,7 @@ function ExpenseForm() {
             />
           </Form.Label>
           <Form.Label htmlFor="currency">
-            Moeda:
+            Moeda
             <Form.Select
               id="currency"
               name="currency"
@@ -118,7 +119,7 @@ function ExpenseForm() {
             </Form.Select>
           </Form.Label>
           <Form.Label htmlFor="convertTo">
-            Converter para:
+            Converter para
             <Form.Select
               id="convertTo"
               name="convertTo"
@@ -134,7 +135,7 @@ function ExpenseForm() {
         </div>
         <div className={style.methodAndTagContainer}>
           <Form.Label htmlFor="method">
-            Método de pagamento:
+            Método de pagamento
             <Form.Select
               name="method"
               value={method}
@@ -151,7 +152,7 @@ function ExpenseForm() {
             </Form.Select>
           </Form.Label>
           <Form.Label htmlFor="tag">
-            Tag:
+            Tag
             <Form.Select
               name="tag"
               value={tag}
@@ -163,17 +164,24 @@ function ExpenseForm() {
             </Form.Select>
           </Form.Label>
         </div>
-        <Form.Label htmlFor="description">
-          Descrição:
-          <Form.Control
-            name="description"
-            type="text"
-            value={description}
-            onChange={({ target }) => setDescription(target.value)}
-          />
-        </Form.Label>
+        <div
+          className={style.description}
+        >
+          <Form.Label
+            htmlFor="description"
+          >
+            Descrição
+            <Form.Control
+              name="description"
+              type="text"
+              value={description}
+              onChange={({ target }) => setDescription(target.value)}
+            />
+          </Form.Label>
+        </div>
         <Button
-          variant="primary"
+          className={style.formButton}
+          variant={editing ? 'success' : 'primary'}
           size="sm"
           type="button"
           onClick={editing ? editExpense : addExpense}

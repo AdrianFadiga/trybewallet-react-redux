@@ -15,7 +15,7 @@ export const convertValue = async (id, description, tag, method, value, currency
     value,
     currency,
     convertTo,
-    convertedValue: value * (data[currency].ask / data[convertTo].ask),
-    convertionRatio: (data[currency].ask / data[convertTo].ask),
+    convertedValue: (value * (data[currency].ask / data[convertTo].ask)).toFixed(2),
+    convertionRatio: (data[currency].ask / data[convertTo].ask).toFixed(4),
   };
 };
