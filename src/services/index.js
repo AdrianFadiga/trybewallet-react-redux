@@ -3,11 +3,18 @@ export const getCurrencies = async () => {
   return Object.keys(data);
 };
 
-export const convertValue = async (value, currency, convertTo) => {
+export const convertValue = async (id, description, tag, method, value, currency, convertTo) => {
   const data = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
   data.BRL = { ask: '1' };
   data.BTC.ask *= 1000;
   return {
+    id,
+    description,
+    tag,
+    method,
+    value,
+    currency,
+    convertTo,
     convertedValue: value * (data[currency].ask / data[convertTo].ask),
     convertionRatio: (data[currency].ask / data[convertTo].ask),
   };

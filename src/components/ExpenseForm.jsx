@@ -21,7 +21,7 @@ function ExpenseForm() {
   const [id, setId] = useState(1);
   const dispatch = useDispatch();
   const { currencies, expenses } = useSelector((state) => state.wallet);
-  const { editing, expenseToEdit: { expense, index } } = useSelector((state) => state.editing);
+  const { editing, index } = useSelector((state) => state.editing);
   const { email } = useSelector((state) => state.user);
 
   useEffect(async () => {
@@ -33,22 +33,31 @@ function ExpenseForm() {
   }, []);
 
   useEffect(() => {
-    if (expense) {
-      setValue(expense.value);
-      setCurrency(expense.currency);
-      setConvertTo(expense.convertTo);
-      setMethod(expense.method);
-      setTag(expense.tag);
-      setDescription(expense.description);
+    if (editing) {
+      setValue(expenses[index].value);
+      setCurrency(expenses[index].currency);
+      setConvertTo(expenses[index].convertTo);
+      setMethod(expenses[index].method);
+      setTag(expenses[index].tag);
+      setDescription(expenses[index].description);
     }
   }, [editing]);
 
-  const editExpense = (obj) => {
-    const editedExpenses = expenses;
-    editedExpenses[index] = obj;
+  const editExpense = async () => {
+    const expenseId = expenses[index].id;
+    const editedExpense = await convertValue(
+      expenseId,
+      description,
+      tag,
+      method,
+      value,
+      currency,
+      convertTo,
+    );
+    expenses[index] = editedExpense;
     dispatch({
       type: EDIT_EXPENSE,
-      payload: editedExpenses,
+      payload: expenses,
     });
     dispatch({
       type: DISABLE_EDITING,
@@ -56,30 +65,16 @@ function ExpenseForm() {
   };
 
   const addExpense = async () => {
-    const { convertedValue, convertionRatio } = await convertValue(value, currency, convertTo);
-    const obj = {
-      id,
-      description,
-      tag,
-      method,
-      value,
-      convertionRatio: Number(convertionRatio.toFixed(4)),
-      convertedValue: Number(convertedValue.toFixed(2)),
-      currency,
-      convertTo,
-    };
-    if (!editing) {
-      dispatch({
-        type: ADD_EXPENSE,
-        payload: {
-          ...obj,
-        },
-      });
-      setValue(0);
-      setId(id + 1);
-      return 'so p pausar a função msm';
-    }
-    return editExpense(obj);
+    const expenseObj = await convertValue(id, description, tag, method, value, currency, convertTo);
+    dispatch({
+      type: ADD_EXPENSE,
+      payload: {
+        ...expenseObj,
+      },
+    });
+    setValue(0);
+    setDescription('');
+    setId(id + 1);
   };
 
   return (
@@ -181,9 +176,9 @@ function ExpenseForm() {
           variant="primary"
           size="sm"
           type="button"
-          onClick={addExpense}
+          onClick={editing ? editExpense : addExpense}
         >
-          {!editing ? 'Adicionar despesa' : 'Editar despesa'}
+          {editing ? 'Editar despesa' : 'Adicionar despesa'}
         </Button>
       </Form>
     </section>

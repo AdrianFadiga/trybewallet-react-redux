@@ -10,12 +10,4 @@ export const validatePassword = (email, password) => {
 
 export const handleDelete = (id, expenses) => expenses.filter((f) => f.id !== id);
 
-export const getExpenseObject = (id, expenses) => expenses.reduce((acc, curr, index) => {
-  if (curr.id === id) {
-    return {
-      expense: curr,
-      index,
-    };
-  }
-  return acc;
-}, []);
+export const getExpenseIndex = (id, expenses) => expenses.findIndex((e) => e.id === id);
