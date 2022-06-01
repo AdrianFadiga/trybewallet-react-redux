@@ -174,6 +174,7 @@ function ExpenseForm() {
             <Form.Control
               name="description"
               type="text"
+              maxLength="25"
               value={description}
               onChange={({ target }) => setDescription(target.value)}
             />
