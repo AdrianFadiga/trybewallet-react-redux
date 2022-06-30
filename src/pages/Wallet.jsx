@@ -15,6 +15,7 @@ function Carteira() {
     <section className={style.walletPage}>
       <ExpenseForm />
       <Table
+        className={style.teste}
         striped
         bordered
         hover
@@ -26,7 +27,13 @@ function Carteira() {
         <thead>
           <tr>
             {tableHead.map((t) => (
-              <th key={t}>{t}</th>
+              <th
+                key={t}
+                className={style.tableHead}
+              >
+                {t}
+
+              </th>
             ))}
           </tr>
         </thead>

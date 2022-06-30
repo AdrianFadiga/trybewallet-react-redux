@@ -4,4 +4,12 @@
   width: 100%;
   height: 100vh; 
   background-color: #212529;
+
+}
+
+.tableHead {
+  height: 70px !important;
+  width: 11%;
+  max-height: 45px !important;
+  overflow: hidden;
 }

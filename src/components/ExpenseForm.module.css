@@ -14,9 +14,11 @@
   flex-direction: row;
   background-color: #212529;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  padding-bottom: 8px;
   padding-right: 10px;
   padding-left: 10px;
+  height: 70px !important;
 }
 
 .logoImg {
