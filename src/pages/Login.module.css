@@ -17,7 +17,7 @@
 .loginForm {
     display: flex;
     flex-direction: column;
-    background-color: rgb(21, 21, 21);
+    background-color: rgb(14, 14, 14);
     width: 350px;
     height: 265px;
     color: rgb(91, 28, 151);
