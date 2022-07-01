@@ -101,7 +101,7 @@ function ExpenseForm() {
               type="number"
               name="value"
               value={value}
-              onChange={({ target }) => setValue(target.value)}
+              onChange={({ target }) => setValue(Math.abs(target.value))}
             />
           </Form.Label>
           <Form.Label htmlFor="currency">
