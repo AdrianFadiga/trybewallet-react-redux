@@ -24,7 +24,7 @@ function ExpenseForm() {
   const { editing, index } = useSelector((state) => state.editing);
   const { email } = useSelector((state) => state.user);
 
-  useEffect(async () => {
+  useEffect(() => {
     const getCurrenciesEffect = async () => {
       const data = await getCurrencies();
       dispatch({ type: GET_CURRENCIES, payload: data });
@@ -113,8 +113,8 @@ function ExpenseForm() {
               onChange={({ target }) => setCurrency(target.value)}
             >
               <option>BRL</option>
-              {currencies.map((c) => (
-                <option key={c}>{c}</option>
+              {currencies.map((c, i) => (
+                <option key={`${i + c}`}>{c}</option>
               ))}
             </Form.Select>
           </Form.Label>
@@ -127,8 +127,8 @@ function ExpenseForm() {
               onChange={({ target }) => setConvertTo(target.value)}
             >
               <option>BRL</option>
-              {currencies.map((c) => (
-                <option key={c}>{c}</option>
+              {currencies.map((c, i) => (
+                <option key={`${c + i}`}>{c}</option>
               ))}
             </Form.Select>
           </Form.Label>

@@ -8,6 +8,7 @@ import style from './Login.module.css';
 import walletLogo from '../images/logoWallet.png';
 
 function Login() {
+  // const { email } = useSelector((state) => state.email);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
@@ -21,6 +22,13 @@ function Login() {
     });
     navigate('/wallet');
   };
+
+  useEffect(() => {
+    dispatch({
+      type: USER_LOGIN,
+      payload: '',
+    });
+  }, []);
 
   useEffect(() => {
     setIsDisabled(!validatePassword(email, password));
